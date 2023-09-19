@@ -7,6 +7,8 @@ packages="packages" # esse arquivo deverá conter a lista de pacotes do Debian a
 
 # distro update & upgrade
 echo "Atualizando a lista de pacotes ... "
+
+echo "deb [trusted=yes] http://packages.chon.group/ chonos main" | sudo tee /etc/apt/sources.list.d/chonos.list
 sudo apt-get update
 
 echo "Fazendo upgrade ... "
@@ -71,7 +73,7 @@ sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/v
 sudo apt update
 sudo apt install code
 
-#### MySQL ####
+#### Configuração do MySQL ####
 
 root_passwd=root # mudar a senha do root aqui se quiser
 
