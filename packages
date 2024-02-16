@@ -1,4 +1,5 @@
 apache2
+arduino
 binutils
 chonide
 chonos-serial-port-emulator
@@ -16,8 +17,7 @@ libgomp1
 libopenmpi-dev
 logisim
 make
-mysql-server
-mysql-workbench-community
+mariadb-server
 okular
 openjdk-17-jdk
 php

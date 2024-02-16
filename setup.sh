@@ -14,6 +14,7 @@ echo "Fazendo upgrade ... "
 sudo apt update
 sudo apt-get -y upgrade
 
+sudo apt-get -y install wget gpg
 
 ### MySQL & MySQL Workbench ###
 cd DEBS
@@ -21,23 +22,36 @@ cd DEBS
 wget https://dev.mysql.com/get/mysql-apt-config_0.8.26-1_all.deb
 sudo apt install ./mysql-apt-config_*_all.deb
 
+cd ..
+### Google Chrome ###
+
+cd DEBS
+GOOGLE_CHROME_DEB=google-chrome-stable_current_amd64.deb
+
+if [[ ! -f ${GOOGLE_CHROME_DEB} ]]; then 
+    wget https://dl.google.com/linux/direct/${GOOGLE_CHROME_DEB}
+    sudo apt install ./google-chrome-stable_current_amd64.deb
+fi
+
+cd ..
 ### ChonOS ###
+
 echo "deb [trusted=yes] http://packages.chon.group/ chonos main" | sudo tee /etc/apt/sources.list.d/chonos.list
 sudo apt-get update
 
-##### Visual Studio Code ####
-curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+### Visual Studio Code ###
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
+rm -f packages.microsoft.gpg
 
-sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
-
-sudo apt update
-
-# Instalação dos pacotes. Pacotes inexistentes serão salvos no arquivo ${error_pkgs}
+# Instalação dos pacotes via repositorios. 
+# Pacotes inexistentes serão salvos no arquivo ${error_pkgs}
 if [[ -f "$packages" ]]; then
     ok_pkgs=`mktemp`
     error_pkgs=missingpackages-`date +"%Y-%m-%d_%H-%M"`.txt
     
-    for pkg in $(cat "$packages"); do
+    for pkg in $(cat "../$packages"); do
         echo -n "Checando $pkg ...";
         apt-get install -q -s -y $pkg > /dev/null
         if [ $? -eq 0 ]; then 
@@ -55,17 +69,18 @@ if [[ -f "$packages" ]]; then
 else 
 
     echo "error: file $packages not found"
-    return 1
+    exit 1
 
 fi
 
-### Google Chrome ###
-GOOGLE_CHROME_DEB=google-chrome-stable_current_amd64.deb
+# Configuracao: autologin
+cp /etc/lightdm/lightdm.conf /etc/lightdm/lightdm.conf-`date +"%Y-%m-%d_%H-%M"`.backup
 
-if [[ ! -f ${GOOGLE_CHROME_DEB} ]]; then 
-    wget https://dl.google.com/linux/direct/${GOOGLE_CHROME_DEB}
-    sudo apt install ./google-chrome-stable_current_amd64.deb
-fi
+sed 's/#autologin-user=/autologin-user=aluno/g' /etc/lightdm/lightdm.conf > /tmp/lightdm.conf
+mv /tmp/lightdm.conf /etc/lightdm/lightdm.conf
+
+sed 's/#autologin-user-timeout=0/autologin-user-timeout=0/g' /etc/lightdm/lightdm.conf > /tmp/lightdm.conf
+mv /tmp/lightdm.conf /etc/lightdm/lightdm.conf
 
 
 #### Configuração do MySQL ####
@@ -74,7 +89,6 @@ fi
 
 # Activating root password
 #echo "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${root_passwd}'" | sudo mysql
-
 
 
 
