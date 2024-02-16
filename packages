@@ -17,7 +17,8 @@ libgomp1
 libopenmpi-dev
 logisim
 make
-mariadb-server
+mysql-server
+mysql-workbench
 okular
 openjdk-17-jdk
 php

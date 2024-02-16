@@ -14,24 +14,20 @@ echo "Fazendo upgrade ... "
 sudo apt update
 sudo apt-get -y upgrade
 
-sudo apt-get -y install wget gpg
+sudo apt-get -y install wget gpg git
 
 ### MySQL & MySQL Workbench ###
 cd DEBS
 
-wget https://dev.mysql.com/get/mysql-apt-config_0.8.26-1_all.deb
-sudo apt install ./mysql-apt-config_*_all.deb
+echo "\
+deb http://ftp.br.debian.org/debian bullseye          main contrib non-free non-free-firmware 
+deb http://ftp.br.debian.org/debian bullseye-updates  main contrib non-free non-free-firmware 
+deb http://security.debian.org      bullseye-security  main contrib non-free non-free-firmware
 
-cd ..
-### Google Chrome ###
+deb http://ftp.br.debian.org/debian bullseye-backports  main contrib non-free non-free-firmware
+deb http://ftp.br.debian.org/debian sid  main contrib non-free non-free-firmware" | sudo tee /etc/apt/sources.list
 
-cd DEBS
-GOOGLE_CHROME_DEB=google-chrome-stable_current_amd64.deb
-
-if [[ ! -f ${GOOGLE_CHROME_DEB} ]]; then 
-    wget https://dl.google.com/linux/direct/${GOOGLE_CHROME_DEB}
-    sudo apt install ./google-chrome-stable_current_amd64.deb
-fi
+apt update
 
 cd ..
 ### ChonOS ###
@@ -45,13 +41,15 @@ sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/
 sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
 rm -f packages.microsoft.gpg
 
+sudo apt update
+
 # Instalação dos pacotes via repositorios. 
 # Pacotes inexistentes serão salvos no arquivo ${error_pkgs}
 if [[ -f "$packages" ]]; then
     ok_pkgs=`mktemp`
     error_pkgs=missingpackages-`date +"%Y-%m-%d_%H-%M"`.txt
     
-    for pkg in $(cat "../$packages"); do
+    for pkg in $(cat "$packages"); do
         echo -n "Checando $pkg ...";
         apt-get install -q -s -y $pkg > /dev/null
         if [ $? -eq 0 ]; then 
@@ -72,6 +70,19 @@ else
     exit 1
 
 fi
+
+### Google Chrome ###
+
+cd DEBS
+GOOGLE_CHROME_DEB=google-chrome-stable_current_amd64.deb
+
+if [[ ! -f ${GOOGLE_CHROME_DEB} ]]; then 
+    wget https://dl.google.com/linux/direct/${GOOGLE_CHROME_DEB}
+    sudo apt install ./google-chrome-stable_current_amd64.deb
+fi
+
+cd ..
+
 
 # Configuracao: autologin
 cp /etc/lightdm/lightdm.conf /etc/lightdm/lightdm.conf-`date +"%Y-%m-%d_%H-%M"`.backup
