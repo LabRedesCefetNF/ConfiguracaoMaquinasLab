@@ -12,6 +12,8 @@ g++
 gcc
 git
 golang
+jacamo-cli
+jason-cli
 libapache2-mod-php
 libgomp1
 libopenmpi-dev
@@ -24,3 +26,4 @@ openjdk-17-jdk
 php
 php-mysql
 python3
+webots

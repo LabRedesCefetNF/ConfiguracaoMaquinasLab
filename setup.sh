@@ -43,6 +43,16 @@ rm -f packages.microsoft.gpg
 
 sudo apt update
 
+### WeBOTS ###
+
+echo "Configuring new repositories in the package manager"
+sudo mkdir -p /etc/apt/keyrings
+cd /etc/apt/keyrings
+sudo wget -q https://cyberbotics.com/Cyberbotics.asc
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/Cyberbotics.asc] https://cyberbotics.com/debian binary-amd64/" | sudo tee /etc/apt/sources.list.d/Cyberbotics.list
+
+sudo apt update
+
 # Instalação dos pacotes via repositorios. 
 # Pacotes inexistentes serão salvos no arquivo ${error_pkgs}
 if [[ -f "$packages" ]]; then
@@ -82,25 +92,6 @@ if [[ ! -f ${GOOGLE_CHROME_DEB} ]]; then
 fi
 
 cd ..
-
-clear
-echo "Configuring new repositories in the package manager"
-sudo mkdir -p /etc/apt/keyrings
-cd /etc/apt/keyrings
-sudo wget -q https://cyberbotics.com/Cyberbotics.asc
-echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/Cyberbotics.asc] https://cyberbotics.com/debian binary-amd64/" | sudo tee /etc/apt/sources.list.d/Cyberbotics.list
-
-sudo apt update
-
-echo "Installing the JaCaMo"
-sudo apt install jacamo-cli -y
-
-echo "Installing the Jason CLI"
-sudo apt install jason-cli -y
-
-echo "Installing the Simulator"
-sudo apt install webots -y
-
 
 # Configuracao: autologin
 cp /etc/lightdm/lightdm.conf /etc/lightdm/lightdm.conf-`date +"%Y-%m-%d_%H-%M"`.backup
