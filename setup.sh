@@ -2,17 +2,35 @@
 
 # Executar o script na pasta em que se encontra
 
+alias sudo=""
+
 packages="packages" # esse arquivo deverá conter a lista de pacotes do Debian a baixar
 [[ ! -d DEBS ]] && mkdir DEBS
 
 # distro update & upgrade
 echo "Atualizando a lista de pacotes ... "
 
+echo "Fazendo upgrade ... "
+sudo apt update
+sudo apt-get -y upgrade
+
+
+### MySQL & MySQL Workbench ###
+cd DEBS
+
+wget https://dev.mysql.com/get/mysql-apt-config_0.8.26-1_all.deb
+sudo apt install ./mysql-apt-config_*_all.deb
+
+### ChonOS ###
 echo "deb [trusted=yes] http://packages.chon.group/ chonos main" | sudo tee /etc/apt/sources.list.d/chonos.list
 sudo apt-get update
 
-echo "Fazendo upgrade ... "
-sudo apt-get -y upgrade
+##### Visual Studio Code ####
+curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+
+sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
+
+sudo apt update
 
 # Instalação dos pacotes. Pacotes inexistentes serão salvos no arquivo ${error_pkgs}
 if [[ -f "$packages" ]]; then
@@ -41,44 +59,21 @@ else
 
 fi
 
-cd DEBS
-
 ### Google Chrome ###
 GOOGLE_CHROME_DEB=google-chrome-stable_current_amd64.deb
 
 if [[ ! -f ${GOOGLE_CHROME_DEB} ]]; then 
     wget https://dl.google.com/linux/direct/${GOOGLE_CHROME_DEB}
+    sudo apt install ./google-chrome-stable_current_amd64.deb
 fi
 
-### MySQL Workbench ###
-MYSQL_WORKBENCH_DEB=mysql-workbench-community_8.0.29-1ubuntu20.04_amd64.deb
-
-if [[ ! -f ${MYSQL_WORKBENCH_DEB} ]]; then
-	wget https://downloads.mysql.com/archives/get/p/8/file/${MYSQL_WORKBENCH_DEB}
-fi
-
-# Instalando todos os debs na pasta
-for deb in $(ls *.deb); do 
-
-	sudo dpkg -i ${deb}
-	sudo apt -y install -f
-	
-done
-
-##### Visual Studio Code ####
-curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-
-sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
-
-sudo apt update
-sudo apt install code
 
 #### Configuração do MySQL ####
 
-root_passwd=root # mudar a senha do root aqui se quiser
+#root_passwd=root # mudar a senha do root aqui se quiser
 
 # Activating root password
-echo "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${root_passwd}'" | sudo mysql
+#echo "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${root_passwd}'" | sudo mysql
 
 
 

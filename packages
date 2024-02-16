@@ -4,7 +4,6 @@ php
 apache2
 libapache2-mod-php
 openjdk-17-jdk
-mariadb-server
 codeblocks
 gcc
 g++
@@ -18,3 +17,6 @@ python3
 okular
 curl
 golang
+mysql-server
+mysql-workbench-community
+code
