@@ -2,17 +2,28 @@
 
 # Executar o script na pasta em que se encontra
 
-alias sudo=""
+# Debian nao tem sudo ... 
+alias sudo="";
 
 packages="packages" # esse arquivo deverá conter a lista de pacotes do Debian a baixar
 [[ ! -d DEBS ]] && mkdir DEBS
 
-# distro update & upgrade
-echo "Atualizando a lista de pacotes ... "
 
-echo "Fazendo upgrade ... "
-sudo apt update
-sudo apt-get -y upgrade
+# Na primeira vez que executar o script, faz um full-upgrade e reboota a maquina
+if [[ ! -f /root/.full-upgrade.stamp  ]]; then 
+
+    # distro update & upgrade
+    echo "Fazendo um upgrade ... "
+
+    echo "Fazendo upgrade ... "
+    sudo apt update
+    sudo apt-get -y full-upgrade
+
+    sudo touch /root/.full-upgrade.stamp
+
+    sudo reboot
+
+fi
 
 sudo apt-get -y install wget gpg git
 
@@ -93,7 +104,7 @@ fi
 
 cd ..
 
-# Configuracao: autologin
+### Customizacao: autologin ###
 cp /etc/lightdm/lightdm.conf /etc/lightdm/lightdm.conf-`date +"%Y-%m-%d_%H-%M"`.backup
 
 sed 's/#autologin-user=/autologin-user=aluno/g' /etc/lightdm/lightdm.conf > /tmp/lightdm.conf
