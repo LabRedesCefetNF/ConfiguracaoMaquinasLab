@@ -33,11 +33,11 @@ sudo apt-get -y install wget gpg git
 cd DEBS
 
 echo "\
-deb http://ftp.br.debian.org/debian bullseye          main contrib non-free non-free-firmware 
-deb http://ftp.br.debian.org/debian bullseye-updates  main contrib non-free non-free-firmware 
-deb http://security.debian.org      bullseye-security  main contrib non-free
+deb http://ftp.br.debian.org/debian bookworm          main contrib non-free non-free-firmware 
+deb http://ftp.br.debian.org/debian bookworm-updates  main contrib non-free non-free-firmware 
+deb http://security.debian.org      bookworm-security  main contrib non-free
 
-deb http://ftp.br.debian.org/debian bullseye-backports  main contrib non-free
+deb http://ftp.br.debian.org/debian bookworm-backports  main contrib non-free
 deb http://ftp.br.debian.org/debian sid  main contrib non-free non-free-firmware" | sudo tee /etc/apt/sources.list
 
 apt update
@@ -154,20 +154,20 @@ echo "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${
 
 ### Customizacao: Atalhos para aplicativos ###
 
-cp /usr/share/applications/lxterminal.desktop /home/aluno/Desktop/.
-cp /usr/share/applications/firefox-esr.desktop /home/aluno/Desktop/.
+sudo cp /usr/share/applications/lxterminal.desktop /home/aluno/Desktop/.
+sudo cp /usr/share/applications/firefox-esr.desktop /home/aluno/Desktop/.
 
 # Customizacao: alunos nao podem alterar .profile e .bashrc
 
-chown root:root /home/aluno/.profile
-chown root:root /home/aluno/.bashrc
+sudo chown root:root /home/aluno/.profile
+sudo chown root:root /home/aluno/.bashrc
 
-chmod a=r /home/aluno/.profile
-chmod a=r /home/aluno/.bashrc
+sudo chmod a=r /home/aluno/.profile
+sudo chmod a=r /home/aluno/.bashrc
 
 # Customizacao: todos podem escrever e alterar a pasta do servidor web
 
-chmod a=rw /var/www/html
+sudo chmod a=rw /var/www/html
 
 # Corrigindo dependências, se houver
 # sudo apt install -f
