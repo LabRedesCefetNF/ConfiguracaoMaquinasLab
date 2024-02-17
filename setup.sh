@@ -5,6 +5,8 @@
 # Debian nao tem sudo ... caso esteja se tentando fazer a instalacao no Ubuntu e derivados, comentar a linha abaixo
 alias sudo="";
 
+install_dir="`pwd`"
+
 # O arquivo abaixo deverá conter a lista de pacotes do Debian a instalar. Devera estar na mesma pasta do setup.sh
 packages="packages" 
 [[ ! -d DEBS ]] && mkdir DEBS
@@ -65,6 +67,12 @@ echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/Cyberbotics.asc] https://cyber
 
 sudo apt update
 
+
+
+cd "${install_dir}"
+
+echo "Starting packages intsallation on ${install_dir} ..."
+
 # Instalação dos pacotes via repositorios. 
 # Pacotes inexistentes serão salvos no arquivo ${error_pkgs}
 if [[ -f "$packages" ]]; then
@@ -99,7 +107,7 @@ GOOGLE_CHROME_DEB=google-chrome-stable_current_amd64.deb
 
 if [[ ! -f ${GOOGLE_CHROME_DEB} ]]; then 
     wget https://dl.google.com/linux/direct/${GOOGLE_CHROME_DEB}
-    sudo apt install ./google-chrome-stable_current_amd64.deb
+    sudo apt install -y ./google-chrome-stable_current_amd64.deb
 fi
 
 cd ..
@@ -139,6 +147,11 @@ mv /tmp/lightdm.conf /etc/lightdm/lightdm.conf
 root_passwd=root # mudar a senha do root aqui se quiser
 
 echo "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${root_passwd}'" | sudo mysql
+
+### Customizacao: Atalhos para aplicativos ###
+
+cp /usr/share/applications/lxterminal.desktop /home/aluno/Desktop/.
+cp /usr/share/applications/firefox-esr.desktop /home/aluno/Desktop/.
 
 # Customizacao: alunos nao podem alterar .profile e .bashrc
 
