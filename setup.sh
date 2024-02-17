@@ -106,11 +106,13 @@ GOOGLE_CHROME_DEB=google-chrome-stable_current_amd64.deb
 if [[ ! -f ${GOOGLE_CHROME_DEB} ]]; then 
     wget https://dl.google.com/linux/direct/${GOOGLE_CHROME_DEB}
     sudo apt install -y ./google-chrome-stable_current_amd64.deb
+    sudo apt install -f
 fi
 
 cd ..
 
 ### PyCharm ###
+
 PYCHARM_VERSION="pycharm-community-2023.3.3"
 PYCHARM_TGZ="${PYCHARM_VERSION}.tar.gz"
 
@@ -124,13 +126,16 @@ fi
 
 tar xaf "${PYCHARM_TGZ}"
 
+chown -R aluno:aluno ${PYCHARM_VERSION}
+chmod a+x ${PYCHARM_VERSION}/pycharm.sh
+
 mv ${PYCHARM_VERSION} /home/aluno/.local/.
 
 if [[ ! -d /home/aluno/.local ]]; then 
     
     mkdir /home/aluno/.local
-    chown aluno:aluno /home/aluno/.local
-
+    sudo chown aluno:aluno /home/aluno/.local
+    
 fi
 
 echo "export PATH=\"/home/aluno/.local/${PYCHARM_VERSION}/bin:\${PATH}\"" | sudo tee -a /home/aluno/.profile
@@ -154,8 +159,28 @@ echo "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${
 
 ### Customizacao: Atalhos para aplicativos ###
 
+if [[ ! -d /home/aluno/Desktop ]]; then 
+
+    sudo mkdir /home/aluno/Desktop
+    sudo chown aluno:aluno /home/aluno/Desktop
+
+fi
+
 sudo cp /usr/share/applications/lxterminal.desktop /home/aluno/Desktop/.
 sudo cp /usr/share/applications/firefox-esr.desktop /home/aluno/Desktop/.
+sudo cp /usr/share/applications/code.desktop /home/aluno/Desktop/.
+sudo cp /usr/share/applications/codeblocks.desktop /home/aluno/Desktop/.
+sudo cp /usr/share/applications/mysql-workbench.desktop /home/aluno/Desktop/.
+sudo cp /usr/share/applications/google-chrome.desktop /home/aluno/Desktop/.
+sudo cp /usr/share/applications/arduino.desktop /home/aluno/Desktop/.
+sudo cp /usr/share/applications/group.chon.ide.desktop /home/aluno/Desktop/.
+sudo cp /usr/share/applications/group.chon.simulide.desktop /home/aluno/Desktop/.
+sudo cp /usr/share/applications/webots.desktop /home/aluno/Desktop/.
+sudo cp /usr/share/applications/logisim.desktop /home/aluno/Desktop/.
+
+cd /home/aluno/Desktop 
+
+ls *.desktop | xargs -I{} sudo chown root:root '{}'
 
 # Customizacao: alunos nao podem alterar .profile e .bashrc
 
