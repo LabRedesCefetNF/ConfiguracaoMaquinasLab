@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# Executar o script na pasta em que se encontra
+# Executar o script na pasta em que se encontra e no login de root
 
-# Debian nao tem sudo ... 
+# Debian nao tem sudo ... caso esteja se tentando fazer a instalacao no Ubuntu e derivados, comentar a linha abaixo
 alias sudo="";
 
-packages="packages" # esse arquivo deverá conter a lista de pacotes do Debian a baixar
+# O arquivo abaixo deverá conter a lista de pacotes do Debian a instalar. Devera estar na mesma pasta do setup.sh
+packages="packages" 
 [[ ! -d DEBS ]] && mkdir DEBS
-
 
 # Na primeira vez que executar o script, faz um full-upgrade e reboota a maquina
 if [[ ! -f /root/.full-upgrade.stamp  ]]; then 
@@ -47,9 +47,10 @@ echo "deb [trusted=yes] http://packages.chon.group/ chonos main" | sudo tee /etc
 sudo apt-get update
 
 ### Visual Studio Code ###
+
 wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
 sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
-sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
+sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | tee /etc/apt/sources.list.d/vscode.list'
 rm -f packages.microsoft.gpg
 
 sudo apt update
@@ -73,7 +74,7 @@ if [[ -f "$packages" ]]; then
     for pkg in $(cat "$packages"); do
         echo -n "Checando $pkg ...";
         apt-get install -q -s -y $pkg > /dev/null
-        if [ $? -eq 0 ]; then 
+        if [[ $? -eq 0 ]]; then 
             echo "ok";
             echo "$pkg" >> $ok_pkgs ;
 
@@ -88,7 +89,6 @@ if [[ -f "$packages" ]]; then
 else 
 
     echo "error: file $packages not found"
-    exit 1
 
 fi
 
@@ -104,6 +104,26 @@ fi
 
 cd ..
 
+### PyCharm ###
+PYCHARM_VERSION="pycharm-community-2023.3.3"
+PYCHARM_TGZ="${PYCHARM_VERSION}.tar.gz"
+
+cd DEBS 
+
+if [[ ! -f "${`PYCHARM_TGZ}" ]]; then 
+
+    wget "https://download.jetbrains.com/python/${PYCHARM_TGZ}"
+
+fi
+
+tar xaf "${PYCHARM_TGZ}"
+
+mv ${PYCHARM_VERSION} /home/aluno/.local/.
+
+echo "export PATH=/home/aluno/.local/${PYCHARM_VERSION}/bin:${PATH}" | sudo tee -a /home/aluno/.profile
+
+cd ..
+
 ### Customizacao: autologin ###
 cp /etc/lightdm/lightdm.conf /etc/lightdm/lightdm.conf-`date +"%Y-%m-%d_%H-%M"`.backup
 
@@ -114,15 +134,13 @@ sed 's/#autologin-user-timeout=0/autologin-user-timeout=0/g' /etc/lightdm/lightd
 mv /tmp/lightdm.conf /etc/lightdm/lightdm.conf
 
 
-#### Configuração do MySQL ####
+### Customizacao: Senha de root do MariaDB / MySQL ###
 
-#root_passwd=root # mudar a senha do root aqui se quiser
+root_passwd=root # mudar a senha do root aqui se quiser
 
-# Activating root password
-#echo "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${root_passwd}'" | sudo mysql
+echo "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${root_passwd}'" | sudo mysql
 
-
-
+# Customizacao: alunos nao podem alterar .profile e .bashrc
 
 # Corrigindo dependências, se houver
 # sudo apt install -f
