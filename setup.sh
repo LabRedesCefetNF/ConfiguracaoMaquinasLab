@@ -134,21 +134,28 @@ mv ${PYCHARM_VERSION} /home/aluno/.local/.
 if [[ ! -d /home/aluno/.local ]]; then 
     
     mkdir /home/aluno/.local
-    sudo chown -R aluno:aluno /home/aluno/.local
+    sudo chown aluno:aluno /home/aluno/.local
     
 fi
 
 echo "export PATH=\"/home/aluno/.local/${PYCHARM_VERSION}/bin:\${PATH}\"" | sudo tee -a /home/aluno/.profile
 
+cd /home/aluno/Desktop
+
+ln -s /home/aluno/.local/${PYCHARM_VERSION}/bin/pycharm.sh
+
 cd ..
+
+### Colocando no grupo dialup para usar o Arduino ###
+sudo usermod -aG dialup aluno
 
 ### Customizacao: autologin ###
 cp /etc/lightdm/lightdm.conf /etc/lightdm/lightdm.conf-`date +"%Y-%m-%d_%H-%M"`.backup
 
-sed 's/#autologin-user=/autologin-user=aluno/g' /etc/lightdm/lightdm.conf > /tmp/lightdm.conf
+sed 's/#autologin-user=/autologin-user=aluno/g' /etc/lightdm/lightdm.conf | sudo tee /tmp/lightdm.conf
 mv /tmp/lightdm.conf /etc/lightdm/lightdm.conf
 
-sed 's/#autologin-user-timeout=0/autologin-user-timeout=0/g' /etc/lightdm/lightdm.conf > /tmp/lightdm.conf
+sed 's/#autologin-user-timeout=0/autologin-user-timeout=0/g' /etc/lightdm/lightdm.conf | sudo tee /tmp/lightdm.conf
 mv /tmp/lightdm.conf /etc/lightdm/lightdm.conf
 
 ### Customizacao: Senha de root do MariaDB / MySQL ###
@@ -181,7 +188,7 @@ sudo cp /usr/share/applications/logisim.desktop /home/aluno/Desktop/.
 cd /home/aluno/Desktop 
 
 ls *.desktop | xargs -I{} sudo chown root:root '{}'
-ls *.desktop | xargs -I{} sudo chmod 755 '{}'
+ls *.desktop | xargs -I{} sudo chmod 555 '{}'
 
 # Customizacao: alunos nao podem alterar .profile e .bashrc
 
@@ -193,4 +200,4 @@ sudo chmod a=r /home/aluno/.bashrc
 
 # Customizacao: todos podem escrever e alterar a pasta do servidor web
 
-sudo chmod a=rw /var/www/html
+sudo chmod a=rwx /var/www/html
