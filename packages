@@ -21,9 +21,12 @@ logisim
 make
 mysql-server
 mysql-workbench
+net-tools
 okular
 openjdk-17-jdk
 php
 php-mysql
 python3
 webots
+wireshark
+whois
