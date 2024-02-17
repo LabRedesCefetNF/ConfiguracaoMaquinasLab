@@ -120,7 +120,7 @@ tar xaf "${PYCHARM_TGZ}"
 
 mv ${PYCHARM_VERSION} /home/aluno/.local/.
 
-echo "export PATH=/home/aluno/.local/${PYCHARM_VERSION}/bin:\${PATH}" | sudo tee -a /home/aluno/.profile
+echo "export PATH=\"/home/aluno/.local/${PYCHARM_VERSION}/bin:\${PATH}\"" | sudo tee -a /home/aluno/.profile
 
 cd ..
 
