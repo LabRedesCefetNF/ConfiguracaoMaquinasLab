@@ -35,7 +35,7 @@ cd DEBS
 echo "\
 deb http://ftp.br.debian.org/debian bullseye          main contrib non-free non-free-firmware 
 deb http://ftp.br.debian.org/debian bullseye-updates  main contrib non-free non-free-firmware 
-deb http://security.debian.org      bullseye-security  main contrib non-free non-free-firmware
+deb http://security.debian.org      bullseye-security  main contrib non-free
 
 deb http://ftp.br.debian.org/debian bullseye-backports  main contrib non-free
 deb http://ftp.br.debian.org/debian sid  main contrib non-free non-free-firmware" | sudo tee /etc/apt/sources.list
@@ -67,17 +67,15 @@ echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/Cyberbotics.asc] https://cyber
 
 sudo apt update
 
-
+### Instalação dos pacotes via repositorios. ###
 
 cd "${install_dir}"
+echo "Starting packages installation on ${install_dir} ..."
 
-echo "Starting packages intsallation on ${install_dir} ..."
-
-# Instalação dos pacotes via repositorios. 
-# Pacotes inexistentes serão salvos no arquivo ${error_pkgs}
 if [[ -f "$packages" ]]; then
     ok_pkgs=`mktemp`
-    error_pkgs=missingpackages-`date +"%Y-%m-%d_%H-%M"`.txt
+    # Pacotes inexistentes serão salvos no arquivo ${error_pkgs}
+    error_pkgs=missingpackages-`date +"%Y-%m-%d_%H-%M"`.txt 
     
     for pkg in $(cat "$packages"); do
         echo -n "Checando $pkg ...";
@@ -128,6 +126,13 @@ tar xaf "${PYCHARM_TGZ}"
 
 mv ${PYCHARM_VERSION} /home/aluno/.local/.
 
+if [[ ! -d /home/aluno/.local ]]; then 
+    
+    mkdir /home/aluno/.local
+    chown aluno:aluno /home/aluno/.local
+
+fi
+
 echo "export PATH=\"/home/aluno/.local/${PYCHARM_VERSION}/bin:\${PATH}\"" | sudo tee -a /home/aluno/.profile
 
 cd ..
@@ -141,7 +146,6 @@ mv /tmp/lightdm.conf /etc/lightdm/lightdm.conf
 sed 's/#autologin-user-timeout=0/autologin-user-timeout=0/g' /etc/lightdm/lightdm.conf > /tmp/lightdm.conf
 mv /tmp/lightdm.conf /etc/lightdm/lightdm.conf
 
-
 ### Customizacao: Senha de root do MariaDB / MySQL ###
 
 root_passwd=root # mudar a senha do root aqui se quiser
@@ -154,6 +158,16 @@ cp /usr/share/applications/lxterminal.desktop /home/aluno/Desktop/.
 cp /usr/share/applications/firefox-esr.desktop /home/aluno/Desktop/.
 
 # Customizacao: alunos nao podem alterar .profile e .bashrc
+
+chown root:root /home/aluno/.profile
+chown root:root /home/aluno/.bashrc
+
+chmod a=r /home/aluno/.profile
+chmod a=r /home/aluno/.bashrc
+
+# Customizacao: todos podem escrever e alterar a pasta do servidor web
+
+chmod a=rw /var/www/html
 
 # Corrigindo dependências, se houver
 # sudo apt install -f
