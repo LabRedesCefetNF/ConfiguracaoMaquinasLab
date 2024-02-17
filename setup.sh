@@ -35,7 +35,7 @@ deb http://ftp.br.debian.org/debian bullseye          main contrib non-free non-
 deb http://ftp.br.debian.org/debian bullseye-updates  main contrib non-free non-free-firmware 
 deb http://security.debian.org      bullseye-security  main contrib non-free non-free-firmware
 
-deb http://ftp.br.debian.org/debian bullseye-backports  main contrib non-free non-free-firmware
+deb http://ftp.br.debian.org/debian bullseye-backports  main contrib non-free
 deb http://ftp.br.debian.org/debian sid  main contrib non-free non-free-firmware" | sudo tee /etc/apt/sources.list
 
 apt update
