@@ -134,7 +134,7 @@ mv ${PYCHARM_VERSION} /home/aluno/.local/.
 if [[ ! -d /home/aluno/.local ]]; then 
     
     mkdir /home/aluno/.local
-    sudo chown aluno:aluno /home/aluno/.local
+    sudo chown -R aluno:aluno /home/aluno/.local
     
 fi
 
@@ -181,6 +181,7 @@ sudo cp /usr/share/applications/logisim.desktop /home/aluno/Desktop/.
 cd /home/aluno/Desktop 
 
 ls *.desktop | xargs -I{} sudo chown root:root '{}'
+ls *.desktop | xargs -I{} sudo chmod 755 '{}'
 
 # Customizacao: alunos nao podem alterar .profile e .bashrc
 
@@ -193,40 +194,3 @@ sudo chmod a=r /home/aluno/.bashrc
 # Customizacao: todos podem escrever e alterar a pasta do servidor web
 
 sudo chmod a=rw /var/www/html
-
-# Corrigindo dependências, se houver
-# sudo apt install -f
-
-# Criando grupo 'dev' para desenvolvimento de projetos
-# sudo addgroup dev
-
-# Adicionando permissões de escrita e leitura para membros do grupo 'dev' na pasta 'www'
-# sudo chown root:dev -R /var/www
-
-# sudo chmod g+rwx -R /var/www
-
-# Usuário 'dev' no grupo 'dev', senha "???"
-# sudo adduser projetos -G dev 
-
-# Criando um usuário 'dev', senha '12345678', com permissão total no MySQL 
-
-
-# IDE PyCharm
-# sudo snap install pycharm-community --classic
-
-# if [[ ! -f pycharm-community-2022.1.tar.gz ]]; then
-#     wget https://download-cdn.jetbrains.com/python/pycharm-community-2022.1.tar.gz
-# fi
-
-# tar xaf pycharm-community-2022.1.tar.gz
-
-# if [[ $? -ne 0 ]]; then
-#     error_string="`date`: Erro instalando PyCharm!"
-#     echo "$error_string" >> error.log
-# fi
-
-# Corrigindo pacotes inexistentes, se houver
-sudo apt -f install
-
-# Setup do ambiente dos projetos
-sudo mkdir /projetos
