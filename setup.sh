@@ -154,6 +154,19 @@ ln -s /home/aluno/.local/${PYCHARM_VERSION}/bin/pycharm.sh
 
 cd ..
 
+### Packet Tracer ###
+
+# Tive que baixar o pacote da NetAcad e depois por no meu OneDrive ... 
+
+cd "${install_dir}"/DEBS
+
+wget https://public.ph.files.1drv.com/y4mV4QcCeN1TDZ6W8yVvMleXkMKcqlvg_ZOK4Ula0nMFh3rTgcAPkqNT_DZpKRU6UKqHF6bxmztw3NwTpCjw5ufKCnRQYNx3c5bK2pjmsyycsk64t-q_sLyLirZN-uYS6_1Ww9Y8Dv0_gxaGQCzsjGTcg8NnFc0eZg4-lm407JAOnqIW_zgu0mDWHsW2XonxUFNh9FZsirUsI0H-x7eIIEb84ryNqatKkYgzc6p4EjxORg?AVOverride=1 \
+    -O packet_tracer.deb
+
+sudo dpkg -i packet_tracer.deb
+
+sudo apt install -f
+
 ### Wireshark ###
 
 # No Debian 12 sid ele está com a instalação quebrada, portanto estamos fazendo compilacao na unha
@@ -223,6 +236,8 @@ cd /home/aluno/Desktop
 ls *.desktop | xargs -I{} sudo chown root:root '{}'
 ls *.desktop | xargs -I{} sudo chmod 555 '{}'
 
+# Customizacao: alunos nao podem alterar a pasta Desktop
+
 sudo chown root:root /home/aluno/Desktop
 sudo chmod a=rx /home/aluno/Desktop
 
@@ -238,3 +253,13 @@ sudo chmod a=r /home/aluno/.bashrc
 
 sudo chown root:root /var/www/html
 sudo chmod a=rwx /var/www/html
+
+# Customizacao: alunos nao podem mudar o papel de parede
+
+cd /home/aluno/.config/
+sudo chown root:root pcmanfm
+sudo chown a=rx pcmanfm
+
+cd pcmanfm
+sudo chown root:root ./*
+sudo chmod a=r ./*
