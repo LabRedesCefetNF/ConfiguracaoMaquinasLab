@@ -102,7 +102,9 @@ if [[ -f "$packages" ]]; then
 
 else 
 
-    echo "error: file $packages not found"
+    echo "error: file $packages not found - aborting"
+
+    exit 1
 
 fi
 
@@ -227,10 +229,10 @@ sudo cp /usr/share/applications/group.chon.ide.desktop /home/aluno/Desktop/.
 sudo cp /usr/share/applications/group.chon.simulide.desktop /home/aluno/Desktop/.
 sudo cp /usr/share/applications/webots.desktop /home/aluno/Desktop/.
 sudo cp /usr/share/applications/logisim.desktop /home/aluno/Desktop/.
+sudo cp /usr/share/applications/cisco-pt821.desktop /home/aluno/Desktop/.
 
-# compilados ficam no /usr/local/share/applications
-sudo cp /usr/local/share/applications/org.wireshark.wireshark.desktop /home/aluno/Desktop/.
-sudo cp /usr/local/share/applications/cisco-pt821.desktop /home/aluno/Desktop/.
+# compilados e dpkgs ficam no /usr/local/share/applications
+sudo cp /usr/local/share/applications/org.wireshark.Wireshark.desktop /home/aluno/Desktop/.
 
 ls *.desktop | xargs -I{} sudo chown root:root '{}'
 ls *.desktop | xargs -I{} sudo chmod 555 '{}'
@@ -269,4 +271,6 @@ sudo chmod a=r ./*
 
 # Finalizando instalacao: limpando pacotes desnecessarios
 
-sudo apt autoremove
+sudo apt -y autoremove
+
+exit 0
