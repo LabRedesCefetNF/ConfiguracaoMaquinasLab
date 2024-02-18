@@ -161,6 +161,21 @@ cd ..
 
 sudo apt install libpcap-dev libglib2.0-dev flex asciidoctor qt6-base-dev cmake libgcrypt20-dev libc-ares-dev qt6-tools-dev libqt6core5compat6-dev libspeexdsp-dev
 
+cd "${install_dir}"
+
+wget https://2.na.dl.wireshark.org/src/wireshark-4.2.3.tar.xz
+
+tar xaf wireshark-4.2.3.tar.xz
+
+cd wireshark-4.2.3
+wireshark_install_dir="`pwd`"
+
+mkdir build
+cd build
+cmake "${wireshark_install_dir}"
+make all
+make install
+
 ### Customizacao: colocando 'aluno' no grupo 'dialup' para usar o Arduino ###
 sudo usermod -aG dialup aluno
 
@@ -199,6 +214,9 @@ sudo cp /usr/share/applications/group.chon.ide.desktop /home/aluno/Desktop/.
 sudo cp /usr/share/applications/group.chon.simulide.desktop /home/aluno/Desktop/.
 sudo cp /usr/share/applications/webots.desktop /home/aluno/Desktop/.
 sudo cp /usr/share/applications/logisim.desktop /home/aluno/Desktop/.
+
+# compilados ficam no /usr/local/share/applications
+sudo cp /usr/local/share/applications/org.wireshark.wireshark.desktop /home/aluno/Desktop/.
 
 cd /home/aluno/Desktop 
 
