@@ -83,7 +83,7 @@ echo "Starting packages installation on ${install_dir} ..."
 if [[ -f "$packages" ]]; then
     ok_pkgs=`mktemp`
     # Pacotes inexistentes serão salvos no arquivo ${error_pkgs}
-    error_pkgs=missingpackages-`date +"%Y-%m-%d_%H-%M"`.txt 
+    error_pkgs=missingpackages-`date +"%Y-%m-%d_%H-%M"`.txt
     
     for pkg in $(cat "$packages"); do
         echo -n "Checando $pkg ...";
@@ -154,17 +154,24 @@ ln -s /home/aluno/.local/${PYCHARM_VERSION}/bin/pycharm.sh
 
 cd ..
 
-### Colocando no grupo dialup para usar o Arduino ###
+### Wireshark ###
+
+# No Debian 12 sid ele está com a instalação quebrada, portanto estamos fazendo compilacao na unha
+# Se isso mudar, colocar o pacote 'wireshark' no packages e comentar/retirar estas linhas
+
+sudo apt install libpcap-dev libglib2.0-dev flex asciidoctor qt6-base-dev cmake libgcrypt20-dev libc-ares-dev qt6-tools-dev libqt6core5compat6-dev libspeexdsp-dev
+
+### Customizacao: colocando 'aluno' no grupo 'dialup' para usar o Arduino ###
 sudo usermod -aG dialup aluno
 
 ### Customizacao: autologin ###
 cp /etc/lightdm/lightdm.conf /etc/lightdm/lightdm.conf-`date +"%Y-%m-%d_%H-%M"`.backup
 
 sed 's/#autologin-user=/autologin-user=aluno/g' /etc/lightdm/lightdm.conf | sudo tee /tmp/lightdm.conf
-mv /tmp/lightdm.conf /etc/lightdm/lightdm.conf
+sudo mv /tmp/lightdm.conf /etc/lightdm/lightdm.conf
 
 sed 's/#autologin-user-timeout=0/autologin-user-timeout=0/g' /etc/lightdm/lightdm.conf | sudo tee /tmp/lightdm.conf
-mv /tmp/lightdm.conf /etc/lightdm/lightdm.conf
+sudo mv /tmp/lightdm.conf /etc/lightdm/lightdm.conf
 
 ### Customizacao: Senha de root do MariaDB / MySQL ###
 
@@ -172,7 +179,7 @@ root_passwd=root # mudar a senha do root aqui se quiser
 
 echo "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${root_passwd}'" | sudo mysql
 
-### Customizacao: Atalhos para aplicativos ###
+### Customizacao: Atalhos para aplicativos na Área de Trabalho e não podem apagar ou salvar coisas nela ###
 
 if [[ ! -d /home/aluno/Desktop ]]; then 
 
@@ -198,6 +205,9 @@ cd /home/aluno/Desktop
 ls *.desktop | xargs -I{} sudo chown root:root '{}'
 ls *.desktop | xargs -I{} sudo chmod 555 '{}'
 
+sudo chown root:root /home/aluno/Desktop
+sudo chmod a=rx /home/aluno/Desktop
+
 # Customizacao: alunos nao podem alterar .profile e .bashrc
 
 sudo chown root:root /home/aluno/.profile
@@ -208,4 +218,5 @@ sudo chmod a=r /home/aluno/.bashrc
 
 # Customizacao: todos podem escrever e alterar a pasta do servidor web
 
+sudo chown root:root /var/www/html
 sudo chmod a=rwx /var/www/html
