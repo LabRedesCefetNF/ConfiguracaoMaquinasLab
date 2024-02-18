@@ -23,6 +23,14 @@ if [[ ! -f /root/.full-upgrade.stamp  ]]; then
 
     sudo touch /root/.full-upgrade.stamp
 
+    clear
+
+    echo "O computador será reiniciado em 10s"
+    echo 
+    echo "Certifique-se de fazer um login no usuário 'aluno' a fim de serem criadas as pastas e arquivos do usuário"
+    echo "O processo de configuração irá alterar tais pastas e arquivos"
+    sleep 10
+
     sudo reboot
 
 fi
