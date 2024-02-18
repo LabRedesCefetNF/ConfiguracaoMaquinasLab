@@ -230,11 +230,13 @@ sudo cp /usr/share/applications/logisim.desktop /home/aluno/Desktop/.
 
 # compilados ficam no /usr/local/share/applications
 sudo cp /usr/local/share/applications/org.wireshark.wireshark.desktop /home/aluno/Desktop/.
-
-cd /home/aluno/Desktop 
+sudo cp /usr/local/share/applications/cisco-pt821.desktop /home/aluno/Desktop/.
 
 ls *.desktop | xargs -I{} sudo chown root:root '{}'
 ls *.desktop | xargs -I{} sudo chmod 555 '{}'
+
+# copiando tudo pro root tambem para facilitar nossa vida
+sudo cp /home/aluno/Desktop/* /root/Desktop/.
 
 # Customizacao: alunos nao podem alterar a pasta Desktop
 
