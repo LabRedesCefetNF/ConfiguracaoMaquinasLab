@@ -165,14 +165,14 @@ wget https://public.ph.files.1drv.com/y4mV4QcCeN1TDZ6W8yVvMleXkMKcqlvg_ZOK4Ula0n
 
 sudo dpkg -i packet_tracer.deb
 
-sudo apt install -f
+sudo apt install -f -y
 
 ### Wireshark ###
 
 # No Debian 12 sid ele está com a instalação quebrada, portanto estamos fazendo compilacao na unha
 # Se isso mudar, colocar o pacote 'wireshark' no packages e comentar/retirar estas linhas
 
-sudo apt install libpcap-dev libglib2.0-dev flex asciidoctor qt6-base-dev cmake libgcrypt20-dev libc-ares-dev qt6-tools-dev libqt6core5compat6-dev libspeexdsp-dev
+sudo apt install -y libpcap-dev libglib2.0-dev flex asciidoctor qt6-base-dev cmake libgcrypt20-dev libc-ares-dev qt6-tools-dev libqt6core5compat6-dev libspeexdsp-dev
 
 cd "${install_dir}"
 
@@ -256,6 +256,7 @@ sudo chmod a=r /home/aluno/.bashrc
 sudo chown root:root /var/www/html
 sudo chmod a=rwx /var/www/html
 
+
 # Customizacao: alunos nao podem mudar o papel de parede
 
 cd /home/aluno/.config/
@@ -265,3 +266,7 @@ sudo chown a=rx pcmanfm
 cd pcmanfm
 sudo chown root:root ./*
 sudo chmod a=r ./*
+
+# Finalizando instalacao: limpando pacotes desnecessarios
+
+sudo apt autoremove
