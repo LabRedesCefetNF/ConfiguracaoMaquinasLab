@@ -170,7 +170,7 @@ sudo apt install -f -y
 ### Wireshark ###
 
 # No Debian 12 sid ele está com a instalação quebrada, portanto estamos fazendo compilacao na unha
-# Se isso mudar, colocar o pacote 'wireshark' no packages e comentar/retirar estas linhas
+# Se isso mudar, colocar o pacote 'wireshark' no packages e comentar/retirar as linhas abaixo
 
 sudo apt install -y libpcap-dev libglib2.0-dev flex asciidoctor qt6-base-dev cmake libgcrypt20-dev libc-ares-dev qt6-tools-dev libqt6core5compat6-dev libspeexdsp-dev
 
@@ -181,11 +181,11 @@ wget https://2.na.dl.wireshark.org/src/wireshark-4.2.3.tar.xz
 tar xaf wireshark-4.2.3.tar.xz
 
 cd wireshark-4.2.3
-wireshark_install_dir="`pwd`"
+wireshark_src_dir="`pwd`"
 
 mkdir build
 cd build
-cmake "${wireshark_install_dir}"
+cmake "${wireshark_src_dir}"
 make all
 make install
 
