@@ -192,7 +192,7 @@ make all
 make install
 
 ### Customizacao: colocando 'aluno' no grupo 'dialup' para usar o Arduino ###
-sudo usermod -aG dialup aluno
+sudo usermod -aG dialout aluno
 
 ### Customizacao: autologin ###
 cp /etc/lightdm/lightdm.conf /etc/lightdm/lightdm.conf-`date +"%Y-%m-%d_%H-%M"`.backup
