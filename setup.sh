@@ -293,7 +293,7 @@ cd /home/aluno/.mozilla/firefox
 
 echo "\
 for site in \$(find "\$HOME/.mozilla/firefox" -maxdepth 1 -type d); do \
-    cd \$site;
+    cd "\$site";
     rm -f cookies.sqlite ; \
 done" | sudo tee -a /home/aluno/.profile
 
