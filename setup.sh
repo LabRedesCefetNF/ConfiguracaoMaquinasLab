@@ -116,7 +116,7 @@ GOOGLE_CHROME_DEB=google-chrome-stable_current_amd64.deb
 if [[ ! -f ${GOOGLE_CHROME_DEB} ]]; then 
     wget https://dl.google.com/linux/direct/${GOOGLE_CHROME_DEB}
     sudo apt install -y ./google-chrome-stable_current_amd64.deb
-    sudo apt install -f
+    sudo apt install -y -f
 fi
 
 cd ..
@@ -234,6 +234,8 @@ sudo cp /usr/share/applications/cisco-pt821.desktop /home/aluno/Desktop/.
 # compilados e dpkgs ficam no /usr/local/share/applications
 sudo cp /usr/local/share/applications/org.wireshark.Wireshark.desktop /home/aluno/Desktop/.
 
+cd /home/aluno/Desktop/
+
 ls *.desktop | xargs -I{} sudo chown root:root '{}'
 ls *.desktop | xargs -I{} sudo chmod 555 '{}'
 
@@ -262,10 +264,11 @@ sudo chmod a=rwx /var/www/html
 # Customizacao: alunos nao podem mudar o papel de parede
 
 cd /home/aluno/.config/
-sudo chown root:root pcmanfm
-sudo chown a=rx pcmanfm
+sudo chown -R root:root pcmanfm
+sudo chmod -R a=rx pcmanfm
 
-cd pcmanfm
+cd pcmanfm/LXDE
+
 sudo chown root:root ./*
 sudo chmod a=r ./*
 
