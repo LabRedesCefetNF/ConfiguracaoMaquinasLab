@@ -170,25 +170,27 @@ sudo apt install -f -y
 
 ### Wireshark ###
 
-# No Debian 12 sid ele está com a instalação quebrada, portanto estamos fazendo compilacao na unha
+# No Debian 12 sid ele está com a instalação quebrada, portanto 
 # Se isso mudar, colocar o pacote 'wireshark' no packages e comentar/retirar as linhas abaixo
 
-sudo apt install -y libpcap-dev libglib2.0-dev flex asciidoctor qt6-base-dev cmake libgcrypt20-dev libc-ares-dev qt6-tools-dev libqt6core5compat6-dev libspeexdsp-dev
+apt install -t bookworm -y wireshark
 
-cd "${install_dir}"
+#sudo apt install -y libpcap-dev libglib2.0-dev flex asciidoctor qt6-base-dev cmake libgcrypt20-dev libc-ares-dev qt6-tools-dev libqt6core5compat6-dev libspeexdsp-dev
 
-wget https://2.na.dl.wireshark.org/src/wireshark-4.2.3.tar.xz
+#cd "${install_dir}"
 
-tar xaf wireshark-4.2.3.tar.xz
+#wget https://2.na.dl.wireshark.org/src/wireshark-4.2.3.tar.xz
 
-cd wireshark-4.2.3
-wireshark_src_dir="`pwd`"
+#tar xaf wireshark-4.2.3.tar.xz
 
-mkdir build
-cd build
-cmake "${wireshark_src_dir}"
-make all
-make install
+#cd wireshark-4.2.3
+#wireshark_src_dir="`pwd`"
+
+#mkdir build
+#cd build
+#cmake "${wireshark_src_dir}"
+#make all
+#make install
 
 ### Customizacao: colocando 'aluno' no grupo 'dialup' para usar o Arduino ###
 sudo usermod -aG dialout aluno
@@ -231,7 +233,7 @@ sudo cp /usr/share/applications/logisim.desktop /home/aluno/Desktop/.
 sudo cp /usr/share/applications/cisco-pt821.desktop /home/aluno/Desktop/.
 
 # compilados e dpkgs ficam no /usr/local/share/applications
-sudo cp /usr/local/share/applications/org.wireshark.Wireshark.desktop /home/aluno/Desktop/.
+sudo cp /usr/share/applications/org.wireshark.Wireshark.desktop /home/aluno/Desktop/.
 
 cd /home/aluno/Desktop/
 
