@@ -174,7 +174,7 @@ cd ..
 
 cd "${install_dir}/DEBS"
 
-apt install -y PacketTracer
+apt install -y packettracer
 
 #sudo dpkg -i packet_tracer.deb
 
