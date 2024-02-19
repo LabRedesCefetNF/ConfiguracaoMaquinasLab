@@ -116,6 +116,7 @@ cd DEBS
 GOOGLE_CHROME_DEB=google-chrome-stable_current_amd64.deb
 
 if [[ ! -f ${GOOGLE_CHROME_DEB} ]]; then 
+
     wget https://dl.google.com/linux/direct/${GOOGLE_CHROME_DEB}
     sudo apt install -y ./google-chrome-stable_current_amd64.deb
     sudo apt install -y -f
@@ -132,7 +133,7 @@ cd DEBS
 
 if [[ ! -f "${PYCHARM_TGZ}" ]]; then 
 
-   wget "http://bsi.cefet-rj.br/repo/${PYCHARM_TGZ}"
+   wget "http://bsi.cefet-rj.br/repo/~jetbrains/${PYCHARM_TGZ}"
 
    if [[ $? -ne 0 ]; then
 
