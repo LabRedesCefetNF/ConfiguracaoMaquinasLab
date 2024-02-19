@@ -269,8 +269,20 @@ sudo chmod -R a=rx pcmanfm
 
 cd pcmanfm/LXDE
 
+wget https://r4.wallpaperflare.com/wallpaper/991/149/186/linux-command-lines-unix-ubuntu-wallpaper-f6d28cbdde8ab17c6c8ac78ad273da08.jpg \
+    -O labredes_default_wallpaper.jpg
+
+wallpaper_path="`pwd`/labredes_default_wallpaper.jpg"
+
+cp desktop-items-0.conf desktop-items-0.conf-`date +"%Y-%m-%d_%H-%M"`.backup
+
+sed "s|^wallpaper=.*|wallpaper=${wallpaper_path}|g" desktop-items-0.conf > novo_desktop.conf
+
+mv novo_desktop.conf desktop-items-0.conf
+
 sudo chown root:root ./*
 sudo chmod a=r ./*
+
 
 # Finalizando instalacao: limpando pacotes desnecessarios
 
