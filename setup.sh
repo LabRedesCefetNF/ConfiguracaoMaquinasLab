@@ -130,7 +130,7 @@ cd ..
 PYCHARM_VERSION="pycharm-community-2023.3.3"
 PYCHARM_TGZ="${PYCHARM_VERSION}.tar.gz"
 
-cd DEBS 
+cd "${install_dir}/DEBS"
 
 if [[ ! -f "${PYCHARM_TGZ}" ]]; then 
 
@@ -170,7 +170,7 @@ cd ..
 
 # Tive que baixar o pacote da NetAcad e depois por no meu OneDrive ... 
 
-cd "${install_dir}"/DEBS
+cd "${install_dir}/DEBS"
 
 apt install -y PacketTracer
 
