@@ -276,12 +276,10 @@ sudo chmod a=rwx /var/www/html
 
 # Customizacao: alunos nao podem mudar o papel de parede
 
-cd /home/aluno/.config/
+cd /home/aluno/.config/pcmanfm
 
-#sudo chown -R root:root pcmanfm
-#sudo chmod -R a=rwx pcmanfm
-
-cd pcmanfm/LXDE
+sudo chown root:root LXDE
+sudo chmod a=rx LXDE
 
 wget https://images3.alphacoders.com/221/221297.png \
     -O labredes_default_wallpaper.png
