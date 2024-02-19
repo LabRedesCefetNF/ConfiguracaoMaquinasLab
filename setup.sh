@@ -269,10 +269,10 @@ sudo chmod -R a=rx pcmanfm
 
 cd pcmanfm/LXDE
 
-wget https://r4.wallpaperflare.com/wallpaper/991/149/186/linux-command-lines-unix-ubuntu-wallpaper-f6d28cbdde8ab17c6c8ac78ad273da08.jpg \
-    -O labredes_default_wallpaper.jpg
+wget https://images3.alphacoders.com/221/221297.png \
+    -O labredes_default_wallpaper.png
 
-wallpaper_path="`pwd`/labredes_default_wallpaper.jpg"
+wallpaper_path="`pwd`/labredes_default_wallpaper.png"
 
 cp desktop-items-0.conf desktop-items-0.conf-`date +"%Y-%m-%d_%H-%M"`.backup
 
@@ -283,6 +283,19 @@ mv novo_desktop.conf desktop-items-0.conf
 sudo chown root:root ./*
 sudo chmod a=r ./*
 
+# Customizacao: adicionando algumas aplicaoes padrao ao sistema
+
+echo "application/pdf=org.kde.okular.desktop" | sudo tee -a /usr/share/applications/defaults.list
+
+# Customizacao: lipando os cookies do Chrome e Firefox ao dar logout/
+
+cd /home/aluno/.mozilla/firefox
+
+echo "\
+for site in \$(find "\$HOME/.mozilla/firefox" -maxdepth 1 - type d); do \
+    cd \$site;
+    rm -f cookies.sqlite ; \
+done" | sudo tee -a /home/aluno/.profile
 
 # Finalizando instalacao: limpando pacotes desnecessarios
 
