@@ -287,12 +287,12 @@ sudo chmod a=r ./*
 
 echo "application/pdf=org.kde.okular.desktop" | sudo tee -a /usr/share/applications/defaults.list
 
-# Customizacao: lipando os cookies do Chrome e Firefox ao dar logout/
+# Customizacao: lipando os cookies do Chrome e Firefox ao dar login 
 
 cd /home/aluno/.mozilla/firefox
 
 echo "\
-for site in \$(find "\$HOME/.mozilla/firefox" -maxdepth 1 - type d); do \
+for site in \$(find "\$HOME/.mozilla/firefox" -maxdepth 1 -type d); do \
     cd \$site;
     rm -f cookies.sqlite ; \
 done" | sudo tee -a /home/aluno/.profile
