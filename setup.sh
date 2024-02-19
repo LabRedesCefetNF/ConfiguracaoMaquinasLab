@@ -303,17 +303,16 @@ echo "application/pdf=org.kde.okular.desktop" | sudo tee -a /usr/share/applicati
 
 # Customizacao: lipando os cookies do Chrome e Firefox ao dar login 
 
-sed "s|exit 0||g" /etc/rc.local | sudo tee /tmp/rc.local.novo
-mv /tmp/rc.local.novo /etc/rc.local
+#sed "s|exit 0||g" /etc/rc.local | sudo tee /tmp/rc.local.novo
+#mv /tmp/rc.local.novo /etc/rc.local
 
-echo "\
-for site in \$(find \"/home/aluno/.mozilla/firefox\" -maxdepth 1 -type d); do \
-    cd \"\$site\"; \
-    rm -f cookies.sqlite ; \
-done" | sudo tee -a /etc/rc.local
+#echo "\
+#for site in \$(find \"/home/aluno/.mozilla/firefox\" -maxdepth 1 -type d); do \
+#    cd \"\$site\"; \
+#    rm -f cookies.sqlite ; \
+#done" | sudo tee -a /etc/rc.local
 
-
-echo "exit 0" | sudo tee -a /etc/rc.local
+#echo "exit 0" | sudo tee -a /etc/rc.local
 
 # Finalizando instalacao: limpando pacotes desnecessarios e reconstruindo o sources.list
 
