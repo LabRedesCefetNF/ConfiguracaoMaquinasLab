@@ -162,7 +162,7 @@ cd ..
 
 cd "${install_dir}"/DEBS
 
-wget https://public.ph.files.1drv.com/y4mUd7uIw2mDk-M2cXO8zfT-olVBDGfXyYXUtaI87G2svKupiQ9zVOnbqkd-lvZXgMJ1IIhZBj76TonwSpQVUXZC365l-akSmF-jF-fQz9Id5-frF3c8mupAJWbdKmaqRsUFj3z-agWGGSAJu8T1mOU1FJWV3lSJnK4o979CTbzfoOo4Za0_KybCAZbRtCZQyuMCpO1E40MOfabIOxbeFT9SohkHNoEwBaw3IuGiG61S5s?AVOverride=1 \
+wget https://public.ph.files.1drv.com/y4mlCraDRS72jGENuUAIksISTuVtL5EtgfE_dD4W5y47HOrvztiyF4D8_Mk2XJI6ZNDzaGR8rKVuBITtoyK1Db9JDKDoEqgJwheMjpke3StIyj9b45szSmrpJ3Z_XKqM2GDRgFJMlivSsZ2K9CHSymlnhkWerKnbaNE_mBvH8iy4JaUN75wf4sYQPE0fXvuk0eeolKsiw3w_qBzlWNiX5HmWv22XmaShd8DGp4ZT8j0nQc?AVOverride=1 \
     -O packet_tracer.deb
 
 sudo dpkg -i packet_tracer.deb
@@ -293,7 +293,7 @@ cd /home/aluno/.mozilla/firefox
 
 echo "\
 for site in \$(find "\$HOME/.mozilla/firefox" -maxdepth 1 -type d); do \
-    cd "\$site";
+    cd "\$site"; \
     rm -f cookies.sqlite ; \
 done" | sudo tee -a /home/aluno/.profile
 
