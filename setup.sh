@@ -114,14 +114,16 @@ fi
 ### Google Chrome ###
 
 cd "${install_dir}/DEBS"
-GOOGLE_CHROME_DEB=google-chrome-stable_current_amd64.deb
+#GOOGLE_CHROME_DEB=google-chrome-stable_current_amd64.deb
 
-if [[ ! -f ${GOOGLE_CHROME_DEB} ]]; then
+#if [[ ! -f ${GOOGLE_CHROME_DEB} ]]; then
 
-    wget https://dl.google.com/linux/direct/${GOOGLE_CHROME_DEB}
-    sudo apt install -y ./google-chrome-stable_current_amd64.deb
-    sudo apt install -y -f
-fi
+#    wget https://dl.google.com/linux/direct/${GOOGLE_CHROME_DEB}
+#    sudo apt install -y ./google-chrome-stable_current_amd64.deb
+#    sudo apt install -y -f
+#fi
+
+apt install -y google-chrome-stable
 
 cd ..
 
