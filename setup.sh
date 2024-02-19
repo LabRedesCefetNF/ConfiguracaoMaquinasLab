@@ -162,7 +162,7 @@ cd ..
 
 cd "${install_dir}"/DEBS
 
-wget https://public.ph.files.1drv.com/y4mV4QcCeN1TDZ6W8yVvMleXkMKcqlvg_ZOK4Ula0nMFh3rTgcAPkqNT_DZpKRU6UKqHF6bxmztw3NwTpCjw5ufKCnRQYNx3c5bK2pjmsyycsk64t-q_sLyLirZN-uYS6_1Ww9Y8Dv0_gxaGQCzsjGTcg8NnFc0eZg4-lm407JAOnqIW_zgu0mDWHsW2XonxUFNh9FZsirUsI0H-x7eIIEb84ryNqatKkYgzc6p4EjxORg?AVOverride=1 \
+wget https://public.ph.files.1drv.com/y4mUd7uIw2mDk-M2cXO8zfT-olVBDGfXyYXUtaI87G2svKupiQ9zVOnbqkd-lvZXgMJ1IIhZBj76TonwSpQVUXZC365l-akSmF-jF-fQz9Id5-frF3c8mupAJWbdKmaqRsUFj3z-agWGGSAJu8T1mOU1FJWV3lSJnK4o979CTbzfoOo4Za0_KybCAZbRtCZQyuMCpO1E40MOfabIOxbeFT9SohkHNoEwBaw3IuGiG61S5s?AVOverride=1 \
     -O packet_tracer.deb
 
 sudo dpkg -i packet_tracer.deb
