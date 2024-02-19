@@ -162,7 +162,7 @@ cd ..
 
 cd "${install_dir}"/DEBS
 
-wget http://192.168.67.99/packet_tracer.deb
+wget http://bsi.cefet-rj.br/repo/~cisco/packet_tracer.deb
 
 sudo dpkg -i packet_tracer.deb
 
