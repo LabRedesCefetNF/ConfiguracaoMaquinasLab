@@ -301,4 +301,6 @@ done" | sudo tee -a /home/aluno/.profile
 
 sudo apt -y autoremove
 
+reboot
+
 exit 0
