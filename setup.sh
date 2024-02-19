@@ -137,7 +137,7 @@ fi
 tar xaf "${PYCHARM_TGZ}"
 
 chown -R aluno:aluno ${PYCHARM_VERSION}
-chmod a+x ${PYCHARM_VERSION}/pycharm.sh
+chmod a+x ${PYCHARM_VERSION}/bin/pycharm.sh
 
 mv ${PYCHARM_VERSION} /home/aluno/.local/.
 
