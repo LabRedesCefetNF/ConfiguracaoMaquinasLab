@@ -138,7 +138,7 @@ if [[ ! -f "${PYCHARM_TGZ}" ]]; then
 
    wget "http://bsi.cefet-rj.br/repo/~jetbrains/${PYCHARM_TGZ}"
 
-   if [[ $? -ne 0 ]; then
+   if [[ $? -ne 0 ]]; then
 
       wget "https://download.jetbrains.com/python/${PYCHARM_TGZ}"
 
