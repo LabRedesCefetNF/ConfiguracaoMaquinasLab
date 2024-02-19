@@ -26,7 +26,7 @@ if [[ ! -f /root/.full-upgrade.stamp  ]]; then
     clear
 
     echo "O computador será reiniciado em 10s"
-    echo 
+    echo
     echo "Certifique-se de fazer um login no usuário 'aluno' a fim de serem criadas as pastas e arquivos do usuário"
     echo "O processo de configuração irá alterar tais pastas e arquivos"
     sleep 10
@@ -130,7 +130,13 @@ cd DEBS
 
 if [[ ! -f "${PYCHARM_TGZ}" ]]; then 
 
-    wget "https://download.jetbrains.com/python/${PYCHARM_TGZ}"
+   wget "http://bsi.cefet-rj.br/repo/${PYCHARM_TGZ}"
+
+   if [[ $? -ne 0 ]; then
+
+      wget "https://download.jetbrains.com/python/${PYCHARM_TGZ}"
+
+   fi
 
 fi
 
@@ -290,13 +296,17 @@ echo "application/pdf=org.kde.okular.desktop" | sudo tee -a /usr/share/applicati
 
 # Customizacao: lipando os cookies do Chrome e Firefox ao dar login 
 
-cd /home/aluno/.mozilla/firefox
+sed "s|exit 0||g" /etc/rc.local | sudo tee /tmp/rc.local.novo
+mv /tmp/rc.local.novo /etc/rc.local
 
 echo "\
-for site in \$(find "\$HOME/.mozilla/firefox" -maxdepth 1 -type d); do \
-    cd "\$site"; \
+for site in \$(find \"/home/aluno/.mozilla/firefox\" -maxdepth 1 -type d); do \
+    cd \"\$site\"; \
     rm -f cookies.sqlite ; \
-done" | sudo tee -a /home/aluno/.profile
+done" | sudo tee -a /etc/rc.local
+
+
+echo "exit 0;" | sudo tee -a /etc/rc.local
 
 # Finalizando instalacao: limpando pacotes desnecessarios
 
