@@ -53,19 +53,20 @@ echo "deb [trusted=yes] http://bsi.cefet-rj.br/repo/~debian labredes main" | sud
 apt update
 
 cd ..
+
 ### ChonOS ###
 
-echo "deb [trusted=yes] http://packages.chon.group/ chonos main" | sudo tee /etc/apt/sources.list.d/chonos.list
-sudo apt-get update
+#echo "deb [trusted=yes] http://packages.chon.group/ chonos main" | sudo tee /etc/apt/sources.list.d/chonos.list
+#sudo apt-get update
 
 ### Visual Studio Code ###
 
-wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
-sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | tee /etc/apt/sources.list.d/vscode.list'
-rm -f packages.microsoft.gpg
+#wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+#sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+#sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | tee /etc/apt/sources.list.d/vscode.list'
+#rm -f packages.microsoft.gpg
 
-sudo apt update
+#sudo apt update
 
 ### WeBOTS ###
 
@@ -112,10 +113,10 @@ fi
 
 ### Google Chrome ###
 
-cd DEBS
+cd "${install_dir}/DEBS"
 GOOGLE_CHROME_DEB=google-chrome-stable_current_amd64.deb
 
-if [[ ! -f ${GOOGLE_CHROME_DEB} ]]; then 
+if [[ ! -f ${GOOGLE_CHROME_DEB} ]]; then
 
     wget https://dl.google.com/linux/direct/${GOOGLE_CHROME_DEB}
     sudo apt install -y ./google-chrome-stable_current_amd64.deb
@@ -171,18 +172,18 @@ cd ..
 
 cd "${install_dir}"/DEBS
 
-wget http://bsi.cefet-rj.br/repo/~cisco/packet_tracer.deb
+apt install -y PacketTracer
 
-sudo dpkg -i packet_tracer.deb
+#sudo dpkg -i packet_tracer.deb
 
-sudo apt install -f -y
+#sudo apt install -f -y
 
 ### Wireshark ###
 
 # No Debian 12 sid ele está com a instalação quebrada, portanto 
 # Se isso mudar, colocar o pacote 'wireshark' no packages e comentar/retirar as linhas abaixo
 
-apt install -t bookworm -y wireshark
+apt install -y wireshark
 
 #sudo apt install -y libpcap-dev libglib2.0-dev flex asciidoctor qt6-base-dev cmake libgcrypt20-dev libc-ares-dev qt6-tools-dev libqt6core5compat6-dev libspeexdsp-dev
 
@@ -274,8 +275,9 @@ sudo chmod a=rwx /var/www/html
 # Customizacao: alunos nao podem mudar o papel de parede
 
 cd /home/aluno/.config/
-sudo chown -R root:root pcmanfm
-sudo chmod -R a=rx pcmanfm
+
+#sudo chown -R root:root pcmanfm
+#sudo chmod -R a=rwx pcmanfm
 
 cd pcmanfm/LXDE
 
@@ -290,8 +292,8 @@ sed "s|^wallpaper=.*|wallpaper=${wallpaper_path}|g" desktop-items-0.conf > novo_
 
 mv novo_desktop.conf desktop-items-0.conf
 
-sudo chown root:root ./*
-sudo chmod a=r ./*
+sudo chown root:root ./desktop-items-0.conf
+sudo chmod a=r ./desktop-items-0.conf
 
 # Customizacao: adicionando algumas aplicaoes padrao ao sistema
 
@@ -309,9 +311,9 @@ for site in \$(find \"/home/aluno/.mozilla/firefox\" -maxdepth 1 -type d); do \
 done" | sudo tee -a /etc/rc.local
 
 
-echo "exit 0;" | sudo tee -a /etc/rc.local
+echo "exit 0" | sudo tee -a /etc/rc.local
 
-# Finalizando instalacao: limpando pacotes desnecessarios
+# Finalizando instalacao: limpando pacotes desnecessarios e reconstruindo o sources.list
 
 sudo apt -y autoremove
 
