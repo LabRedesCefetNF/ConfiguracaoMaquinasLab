@@ -343,6 +343,7 @@ function labredes_customizacao(){
         return 1;
     fi
 
+    install_dir="`pwd`"
 
     ### Customizacao: colocando 'aluno' no grupo 'dialup' para usar o Arduino ###
 
@@ -449,7 +450,7 @@ function labredes_customizacao(){
     # Customizacao: limpando os cookies do Chrome e Firefox ao dar login 
     crontab -l | sudo tee /tmp/crontab.old
 
-    echo "@reboot \"`pwd`/scripts/clearcookies.sh\"" | sudo tee -a /tmp/crontab.old
+    echo "@reboot \"${install_dir}/scripts/clearcookies.sh\"" | sudo tee -a /tmp/crontab.old
 
     crontab /tmp/crontab.old
 
