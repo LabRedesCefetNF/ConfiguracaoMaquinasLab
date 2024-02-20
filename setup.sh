@@ -426,6 +426,9 @@ function labredes_customizacao(){
     sudo chown root:root ./desktop-items-0.conf
     sudo chmod a=r ./desktop-items-0.conf
 
+    sudo touch pcmanfm.conf
+    sudo chown aluno:aluno pcmanfm.conf
+
     # Customizacao: adicionando algumas aplicacoes padrao ao sistema
 
     echo "application/pdf=org.kde.okular.desktop" | sudo tee -a /usr/share/applications/defaults.list
