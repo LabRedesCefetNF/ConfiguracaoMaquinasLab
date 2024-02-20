@@ -450,6 +450,8 @@ function labredes_customizacao(){
     # Customizacao: limpando os cookies do Chrome e Firefox ao dar login 
     crontab -l | sudo tee /tmp/crontab.old
 
+    chmod +x "./scripts/clearcookies.sh"
+
     echo "@reboot \"${install_dir}/scripts/clearcookies.sh\"" | sudo tee -a /tmp/crontab.old
 
     crontab /tmp/crontab.old
