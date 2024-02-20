@@ -191,7 +191,7 @@ function labredes_install_apps_Internet(){
 
     cd "${install_dir}/DEBS"
 
-    wget http://${LINK_DO_PACKETTRACER} \
+    wget "http://bsi.cefet-rj.br/repo/~debian/debs/packet_tracer.deb" \
         -O packettracer.deb
 
 
@@ -448,6 +448,8 @@ function labredes_customizacao(){
     echo "application/pdf=org.kde.okular.desktop" | sudo tee -a /usr/share/applications/defaults.list
 
     # Customizacao: limpando os cookies do Chrome e Firefox ao dar login 
+    cd "${install_dir}"
+
     crontab -l | sudo tee /tmp/crontab.old
 
     chmod +x "./scripts/clearcookies.sh"
