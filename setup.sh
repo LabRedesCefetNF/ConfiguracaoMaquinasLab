@@ -268,6 +268,7 @@ function labredes_install_apps_privrepo(){
             echo "ERROR";
             echo "Package installation error: $pkg" >> "${error_log}" ;
         fi
+        
     done
 
     sudo apt-get install -y `cat $ok_pkgs`
@@ -280,34 +281,38 @@ function labredes_install_apps_privrepo(){
     PYCHARM_TGZ="${PYCHARM_VERSION}.tar.gz"
 
     cd "${install_dir}/DEBS"
-
-    if [[ ! -f "${PYCHARM_TGZ}" ]]; then 
         
-        wget "http://bsi.cefet-rj.br/repo/~jetbrains/${PYCHARM_TGZ}"        
+    wget "http://bsi.cefet-rj.br/repo/~jetbrains/${PYCHARM_TGZ}"        
+
+    if [[ $? -ne 0 ]]; then
+
+        tar xaf "${PYCHARM_TGZ}"
+
+        chown -R aluno:aluno ${PYCHARM_VERSION}
+        chmod a+x ${PYCHARM_VERSION}/bin/pycharm.sh
+
+        mv ${PYCHARM_VERSION} /home/aluno/.local/.
+
+        if [[ ! -d /home/aluno/.local ]]; then 
+            
+            mkdir /home/aluno/.local
+            sudo chown aluno:aluno /home/aluno/.local
+            
+        fi
+
+        echo "export PATH=\"/home/aluno/.local/${PYCHARM_VERSION}/bin:\${PATH}\"" | sudo tee -a /home/aluno/.profile
+
+        cd /home/aluno/Desktop
+
+        ln -s /home/aluno/.local/${PYCHARM_VERSION}/bin/pycharm.sh
+
+    else
+
+        echo "ERROR!"
+
+        echo "Couldn't install PyCharm!" >> ${error_log}
 
     fi
-
-    tar xaf "${PYCHARM_TGZ}"
-
-    chown -R aluno:aluno ${PYCHARM_VERSION}
-    chmod a+x ${PYCHARM_VERSION}/bin/pycharm.sh
-
-    mv ${PYCHARM_VERSION} /home/aluno/.local/.
-
-    if [[ ! -d /home/aluno/.local ]]; then 
-        
-        mkdir /home/aluno/.local
-        sudo chown aluno:aluno /home/aluno/.local
-        
-    fi
-
-    echo "export PATH=\"/home/aluno/.local/${PYCHARM_VERSION}/bin:\${PATH}\"" | sudo tee -a /home/aluno/.profile
-
-    cd /home/aluno/Desktop
-
-    ln -s /home/aluno/.local/${PYCHARM_VERSION}/bin/pycharm.sh
-
-    cd ..
 
     #####################
     ### Packet Tracer ###
