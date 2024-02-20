@@ -428,7 +428,7 @@ function labredes_customizacao(){
 
     sudo cp /etc/xdg/pcmanfm/default/pcmanfm.conf .
     sudo chown root:root pcmanfm.conf
-    sudo chmod a=r
+    sudo chmod a=r pcmanfm.conf
 
     # Customizacao: adicionando algumas aplicacoes padrao ao sistema
 
