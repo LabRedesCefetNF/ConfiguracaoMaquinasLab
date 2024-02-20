@@ -232,6 +232,8 @@ function labredes_install_apps_Internet(){
     #cmake "${wireshark_src_dir}"
     #make all
     #make install
+
+    return 0;
 }
 
 function labredes_install_apps_privrepo(){
@@ -328,9 +330,19 @@ function labredes_install_apps_privrepo(){
 
     apt install -y google-chrome-stable
 
+
+    return 0;
+
 }
 
 function labredes_customizacao(){
+
+    if [[ ! -d scripts ]]; then 
+        echo "Scripts folder not found - aborting"
+
+        return 1;
+    fi
+
 
     ### Customizacao: colocando 'aluno' no grupo 'dialup' para usar o Arduino ###
 
@@ -415,7 +427,7 @@ function labredes_customizacao(){
     wget https://images3.alphacoders.com/221/221297.png \
         -O labredes_default_wallpaper.png
 
-    wallpaper_path="`pwd`/labredes_default_wallpaper.png"
+    wallpaper_path="`pwd`/labredes_wallpaper.png"
 
     cp desktop-items-0.conf desktop-items-0.conf-`date +"%Y-%m-%d_%H-%M"`.backup
 
@@ -434,21 +446,18 @@ function labredes_customizacao(){
 
     echo "application/pdf=org.kde.okular.desktop" | sudo tee -a /usr/share/applications/defaults.list
 
-    # Customizacao: lipando os cookies do Chrome e Firefox ao dar login 
+    # Customizacao: limpando os cookies do Chrome e Firefox ao dar login 
+    crontab -l | sudo tee /tmp/crontab.old
 
-    #sed "s|exit 0||g" /etc/rc.local | sudo tee /tmp/rc.local.novo
-    #mv /tmp/rc.local.novo /etc/rc.local
+    echo "@reboot \"`pwd`/scripts/clearcookies.sh\"" | sudo tee -a /tmp/crontab.old
 
-    #echo "\
-    #for site in \$(find \"/home/aluno/.mozilla/firefox\" -maxdepth 1 -type d); do \
-    #    cd \"\$site\"; \
-    #    rm -f cookies.sqlite ; \
-    #done" | sudo tee -a /etc/rc.local
+    crontab /tmp/crontab.old
 
     #echo "exit 0" | sudo tee -a /etc/rc.local
 
     # Finalizando instalacao: limpando pacotes desnecessarios e reconstruindo o sources.list
-
     sudo apt -y autoremove
+
+    return 0;
 
 }
