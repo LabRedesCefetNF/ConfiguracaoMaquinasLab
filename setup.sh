@@ -426,7 +426,7 @@ function labredes_customizacao(){
     cd LXDE
 
     wget https://images3.alphacoders.com/221/221297.png \
-        -O labredes_default_wallpaper.png
+        -O labredes_wallpaper.png
 
     wallpaper_path="`pwd`/labredes_wallpaper.png"
 
