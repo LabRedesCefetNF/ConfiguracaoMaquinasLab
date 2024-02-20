@@ -66,7 +66,6 @@ function labredes_install_apps_Internet(){
     deb http://ftp.br.debian.org/debian bookworm-backports  main contrib non-free
     deb http://ftp.br.debian.org/debian sid  main contrib non-free non-free-firmware" | sudo tee /etc/apt/sources.list
 
-    #echo "deb [trusted=yes] http://bsi.cefet-rj.br/repo/~debian labredes main" | sudo tee /etc/apt/sources.list
 
     apt update
 
@@ -139,10 +138,6 @@ function labredes_install_apps_Internet(){
         sudo apt install -y -f
     fi
 
-    apt install -y google-chrome-stable
-
-    cd ..
-
     ###############
     ### PyCharm ###
     ###############
@@ -197,8 +192,7 @@ function labredes_install_apps_Internet(){
 
     if [[ $? -eq 0 ]]; then 
 
-        sudo dpkg -i packettracer
-        sudo apt install -f -y
+        sudo apt install -y ./packettracer.deb
 
     else 
 
@@ -214,7 +208,7 @@ function labredes_install_apps_Internet(){
     # No Debian 12 sid ele está com a instalação quebrada, portanto pegando a versão do repositório bookworm
     # Se isso mudar ou parar de funcionar, logo abaixo está como compilar o programa na unha
 
-    apt install -t bookworm -y wireshark
+    sudo apt install -t bookworm -y wireshark
 
     #sudo apt install -y libpcap-dev libglib2.0-dev flex asciidoctor qt6-base-dev cmake libgcrypt20-dev libc-ares-dev qt6-tools-dev libqt6core5compat6-dev libspeexdsp-dev
 
@@ -232,6 +226,9 @@ function labredes_install_apps_Internet(){
     #cmake "${wireshark_src_dir}"
     #make all
     #make install
+
+
+    cd "${install_dir}"
 
     return 0;
 }
