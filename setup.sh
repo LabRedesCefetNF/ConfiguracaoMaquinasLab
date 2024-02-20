@@ -426,8 +426,9 @@ function labredes_customizacao(){
     sudo chown root:root ./desktop-items-0.conf
     sudo chmod a=r ./desktop-items-0.conf
 
-    sudo touch pcmanfm.conf
-    sudo chown aluno:aluno pcmanfm.conf
+    sudo cp /etc/xdg/pcmanfm/default/pcmanfm.conf .
+    sudo chown root:root pcmanfm.conf
+    sudo chmod a=r
 
     # Customizacao: adicionando algumas aplicacoes padrao ao sistema
 
