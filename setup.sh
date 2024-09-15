@@ -59,13 +59,13 @@ function labredes_install_apps_Internet(){
     # O MySQL e o MSQL Workbench estão no sid mas não no bookworm 
 
     echo "\
-    deb http://ftp.br.debian.org/debian bookworm          main contrib non-free non-free-firmware 
-    deb http://ftp.br.debian.org/debian bookworm-updates  main contrib non-free non-free-firmware 
-    deb http://security.debian.org      bookworm-security  main contrib non-free
+deb http://ftp.br.debian.org/debian bookworm          main contrib non-free non-free-firmware 
+deb http://ftp.br.debian.org/debian bookworm-updates  main contrib non-free non-free-firmware 
+deb http://security.debian.org      bookworm-security  main contrib non-free
 
-    deb http://ftp.br.debian.org/debian bookworm-backports  main contrib non-free
-    deb http://ftp.br.debian.org/debian sid  main contrib non-free non-free-firmware" | sudo tee /etc/apt/sources.list
+deb http://ftp.br.debian.org/debian bookworm-backports  main contrib non-free" | sudo tee /etc/apt/sources.list
 
+    echo "deb http://bsi.cefet-rj.br/repo/~debian labredes main" | sudo tee /etc/apt/sources.list.d/labredes.list
 
     apt update
 
@@ -452,13 +452,13 @@ function labredes_customizacao(){
     # Customizacao: limpando os cookies do Chrome e Firefox ao dar login 
     cd "${install_dir}"
 
-    crontab -l | sudo tee /tmp/crontab.old
+    # crontab -l | sudo tee /tmp/crontab.old
 
-    chmod +x "./scripts/clearcookies.sh"
+    # chmod +x "./scripts/clearcookies.sh"
 
-    echo "@reboot \"${install_dir}/scripts/clearcookies.sh\"" | sudo tee -a /tmp/crontab.old
+    # echo "@reboot \"${install_dir}/scripts/clearcookies.sh\"" | sudo tee -a /tmp/crontab.old
 
-    crontab /tmp/crontab.old
+    # crontab /tmp/crontab.old
 
     #echo "exit 0" | sudo tee -a /etc/rc.local
 
