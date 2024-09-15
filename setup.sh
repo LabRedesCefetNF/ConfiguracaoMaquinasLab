@@ -110,7 +110,7 @@ function labredes_install_apps_Internet(){
     
     for pkg in $(cat "$packages"); do
         echo -n "Checando $pkg ...";
-        apt-get install -t bookworm -q -s -y $pkg > /dev/null
+        apt-get install -q -s -y $pkg > /dev/null
         if [[ $? -eq 0 ]]; then 
             echo "ok";
             echo "$pkg" >> $ok_pkgs ;
@@ -121,7 +121,7 @@ function labredes_install_apps_Internet(){
         fi
     done
 
-    sudo apt-get install -t bookworm -y `cat $ok_pkgs`
+    sudo apt-get install -y `cat $ok_pkgs`
 
     #####################
     ### Google Chrome ###
