@@ -83,19 +83,19 @@ deb http://ftp.br.debian.org/debian bookworm-backports  main contrib non-free" |
     sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | tee /etc/apt/sources.list.d/vscode.list'
     rm -f packages.microsoft.gpg
 
-
     ##############    
     ### WeBOTS ###
     ##############    
-    ### PACOTE EXISTENTE NO REPOSITORIO DO CHONGROUP...
-    #echo "Configuring new repositories in the package manager"
-    #sudo mkdir -p /etc/apt/keyrings
-    #cd /etc/apt/keyrings
-    #sudo wget -q https://cyberbotics.com/Cyberbotics.asc
-    #echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/Cyberbotics.asc] https://cyberbotics.com/debian binary-amd64/" | sudo tee /etc/apt/sources.list.d/Cyberbotics.list
-    #sudo apt update
 
-    apt update
+    echo "Configuring new repositories in the package manager"
+    sudo mkdir -p /etc/apt/keyrings
+    cd /etc/apt/keyrings
+    sudo wget -q https://cyberbotics.com/Cyberbotics.asc
+    echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/Cyberbotics.asc] https://cyberbotics.com/debian binary-amd64/" | sudo tee /etc/apt/sources.list.d/Cyberbotics.list
+
+
+    sudo apt update
+    
     ################################################
     ### Instalação dos pacotes via repositorios. ###
     ################################################
@@ -118,6 +118,7 @@ deb http://ftp.br.debian.org/debian bookworm-backports  main contrib non-free" |
         fi
     done
 
+    sudo apt install linux-headers-`uname -r`
     sudo apt-get install -y `cat $ok_pkgs`
 
     #####################
@@ -268,6 +269,7 @@ function labredes_install_apps_privrepo(){
         
     done
 
+    sudo apt install linux-headers-`uname -r`
     sudo apt-get install -y `cat $ok_pkgs`
 
     ###############
