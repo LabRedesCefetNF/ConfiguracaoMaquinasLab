@@ -246,6 +246,7 @@ function labredes_install_apps_privrepo(){
     echo "deb [trusted=yes] http://bsi.cefet-rj.br/repo/~debian labredes main" | sudo tee /etc/apt/sources.list
 
     sudo apt update
+    sudo apt full-upgrade -y
 
     cd "${install_dir}"
 
@@ -269,7 +270,7 @@ function labredes_install_apps_privrepo(){
         
     done
 
-    sudo apt install linux-headers-`uname -r`
+    sudo apt install linux-headers-`uname -r` -y
     sudo apt-get install -y `cat $ok_pkgs`
 
     ###############
@@ -321,7 +322,8 @@ function labredes_install_apps_privrepo(){
 
     apt install -y google-chrome-stable
 
-
+    cd "${install_dir}"
+    
     return 0;
 
 }
