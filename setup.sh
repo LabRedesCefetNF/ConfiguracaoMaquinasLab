@@ -95,7 +95,7 @@ deb http://ftp.br.debian.org/debian bookworm-backports  main contrib non-free" |
 
 
     sudo apt update
-    
+
     ################################################
     ### Instalação dos pacotes via repositorios. ###
     ################################################
@@ -283,35 +283,25 @@ function labredes_install_apps_privrepo(){
         
     wget "http://bsi.cefet-rj.br/repo/~jetbrains/${PYCHARM_TGZ}"        
 
-    if [[ $? -ne 0 ]]; then
+    tar xaf "${PYCHARM_TGZ}"
 
-        tar xaf "${PYCHARM_TGZ}"
+    chown -R aluno:aluno ${PYCHARM_VERSION}
+    chmod a+x ${PYCHARM_VERSION}/bin/pycharm.sh
 
-        chown -R aluno:aluno ${PYCHARM_VERSION}
-        chmod a+x ${PYCHARM_VERSION}/bin/pycharm.sh
+    mv ${PYCHARM_VERSION} /home/aluno/.local/.
 
-        mv ${PYCHARM_VERSION} /home/aluno/.local/.
-
-        if [[ ! -d /home/aluno/.local ]]; then 
-            
-            mkdir /home/aluno/.local
-            sudo chown aluno:aluno /home/aluno/.local
-            
-        fi
-
-        echo "export PATH=\"/home/aluno/.local/${PYCHARM_VERSION}/bin:\${PATH}\"" | sudo tee -a /home/aluno/.profile
-
-        cd /home/aluno/Desktop
-
-        ln -s /home/aluno/.local/${PYCHARM_VERSION}/bin/pycharm.sh
-
-    else
-
-        echo "ERROR!"
-
-        echo "Couldn't install PyCharm!" >> ${error_log}
-
+    if [[ ! -d /home/aluno/.local ]]; then 
+        
+        mkdir /home/aluno/.local
+        sudo chown aluno:aluno /home/aluno/.local
+        
     fi
+
+    echo "export PATH=\"/home/aluno/.local/${PYCHARM_VERSION}/bin:\${PATH}\"" | sudo tee -a /home/aluno/.profile
+
+    cd /home/aluno/Desktop
+
+    ln -s /home/aluno/.local/${PYCHARM_VERSION}/bin/pycharm.sh
 
     #####################
     ### Packet Tracer ###
