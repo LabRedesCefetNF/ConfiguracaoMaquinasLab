@@ -245,6 +245,12 @@ function labredes_install_apps_privrepo(){
 
     echo "deb [trusted=yes] http://bsi.cefet-rj.br/repo/~debian labredes main" | sudo tee /etc/apt/sources.list
 
+echo "\
+deb http://ftp.br.debian.org/debian bookworm          main contrib non-free non-free-firmware 
+deb http://ftp.br.debian.org/debian bookworm-updates  main contrib non-free non-free-firmware 
+deb http://security.debian.org      bookworm-security  main contrib non-free
+deb http://ftp.br.debian.org/debian bookworm-backports  main contrib non-free" | sudo tee /etc/apt/sources.list.d/debian.list
+
     sudo apt update
     sudo apt full-upgrade -y
 
@@ -323,7 +329,7 @@ function labredes_install_apps_privrepo(){
     apt install -y google-chrome-stable
 
     cd "${install_dir}"
-    
+
     return 0;
 
 }
